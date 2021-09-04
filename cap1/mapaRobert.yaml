@@ -1,0 +1,104 @@
+# Este es el mapa personalizado para Duckietown creado por Robert Miller.
+
+tiles:
+- [grass , grass         , grass             , grass             , grass             , grass             , grass             , grass         , grass         , grass         , grass]
+- [grass , grass         , grass             , grass             , grass             , curve_left/W      , straight/E        , curve_left/N  , grass         , grass         , grass]
+- [grass , grass         , grass             , grass             , grass             , straight/N        , floor             , straight/N    , grass         , grass         , grass]
+- [grass , curve_left/W  , straight/E        , straight/E        , straight/E        , curve_right/S     , floor             , 3way_left/S   , straight/E    , curve_left/N  , grass]
+- [grass , straight/N    , floor             , floor             , floor             , floor             , floor             , straight/N    , water         , straight/N    , grass]
+- [grass , straight/N    , floor             , curve_right/N     , straight/E        , straight/E        , straight/E        , curve_right/S , water         , straight/N    , grass]
+- [grass , curve_right/W , straight/E        , 3way_left/N       , water             , water             , water             , water         , curve_right/N , curve_right/S , grass]
+- [grass , grass         , grass             , curve_right/W     , straight/E        , straight/E        , curve_right/E     , water         , straight/N    , grass         , grass]
+- [grass , grass         , grass             , grass             , grass             , grass             , curve_right/W     , straight/E    , curve_right/S , grass         , grass]
+- [grass , grass         , grass             , grass             , grass             , grass             , grass             , grass         , grass         , grass         , grass]
+
+objects:
+
+- kind: duckie
+  pos: [1.5, 2.5]
+  rotate: 67
+  height: 0.08
+  optional: true
+
+- kind: duckie
+  pos: [2.5, 4.5]
+  rotate: 254
+  height: 0.08
+  optional: true
+
+- kind: duckie
+  pos: [2.5, 8.5]
+  rotate: 359
+  height: 0.08
+  optional: true
+
+- kind: duckie
+  pos: [3.5, 1.5]
+  rotate: 45
+  height: 0.08
+  optional: true
+
+- kind: duckie
+  pos: [5.5, 6.5]
+  rotate: 137
+  height: 0.08
+  optional: true
+
+- kind: duckie
+  pos: [6.5, 2.5]
+  rotate: 195
+  height: 0.08
+  optional: true
+
+- kind: duckie
+  pos: [7.5, 7.5]
+  rotate: 1
+  height: 0.08
+  optional: true
+
+- kind: duckie
+  pos: [8.5, 4.5]
+  rotate: 211
+  height: 0.08
+  optional: true
+
+- kind: tree
+  pos: [3.5, 2.5]
+  rotate: 180
+  height: 0.25
+  optional: true
+
+- kind: tree
+  pos: [4.5, 8.5]
+  rotate: 180
+  height: 0.25
+  optional: true
+
+- kind: tree
+  pos: [8.5, 2.5]
+  rotate: 180
+  height: 0.25
+  optional: true
+
+- kind: tree
+  pos: [9.5, 7.5]
+  rotate: 180
+  height: 0.25
+  optional: true
+
+- kind: house
+  pos: [5.5, 4.5]
+  rotate: 180
+  height: 0.25
+  optional: true
+
+- kind: house
+  pos: [2.5, 5.5]
+  rotate: 180
+  height: 0.25
+  optional: true
+  
+tile_size: 0.585
+
+# Increible Damas y Caballeros.
+

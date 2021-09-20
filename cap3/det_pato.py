@@ -60,8 +60,8 @@ if __name__ == '__main__':
 
     # Parametros para el detector de patos
     # Se debe encontrar el rango apropiado
-    lower_yellow = np.array([H_m, S_m, V_m])
-    upper_yellow = np.array([H_M, S_M, V_M])
+    limite_inferior = np.array([25,216,170]) 
+    limite_superior = np.array([31,255,255])
     min_area = 2500
 
     while True:
@@ -75,8 +75,8 @@ if __name__ == '__main__':
         action = mov_duckiebot(key)
         # Se ejecuta la acción definida anteriormente y se retorna la observación (obs),
         # la evaluación (reward), etc
-        obs, reward, done, info = env.step(action)
-        # obs consiste en un imagen RGB de 640 x 480 x 3
+        imagen, reward, done, info = env.step(action)
+        # imagen consiste en un imagen RGB de 640 x 480 x 3
 
         # done significa que el Duckiebot chocó con un objeto o se salió del camino
         if done:
@@ -87,13 +87,13 @@ if __name__ == '__main__':
         ### CÓDIGO DE DETECCIÓN POR COLOR ###
 
         #Transformar imagen a espacio HSV
-
-
+        transformacion = cv2.cvtColor(imagen, cv2.COLOR_RGB2HSV)
+        
         # Filtrar colores de la imagen en el rango utilizando
-
+        mascara = cv2.inRange(transformacion, limite_inferior, limite_superior)
 
         # Bitwise-AND entre máscara (mask) y original (obs) para visualizar lo filtrado
-
+        enmascarada = cv2.bitwise_and(transformacion, transformacion, mask = mascara)
 
         # Se define kernel para operaciones morfológicas
         kernel = np.ones((5,5),np.uint8)
@@ -102,28 +102,30 @@ if __name__ == '__main__':
         # Esto corresponde a hacer un Opening
         # https://docs.opencv.org/trunk/d9/d61/tutorial_py_morphological_ops.html
         #Operacion morfologica erode
-
+        erosion = cv2.erode(enmascarada, kernel, iterations = 1)
         #Operacion morfologica dilate
-
+        dilatacion = cv2.dilate(erosion, kernel, iterations = 1)
 
         # Busca contornos de blobs
         # https://docs.opencv.org/trunk/d3/d05/tutorial_py_table_of_contents_contours.html
-
+        contorno, hierarchy = cv2.findContours(mascara, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
         # Iterar sobre contornos y dibujar bounding box de los patos
-        for cnt in contours:
+        for cnt in contorno:
             # Obtener rectangulo que bordea un contorno
-
+            x1, y1, ancho, altura = cv2.boundingRect(cnt)
+            
             #Filtrar por area minima
+            AREA = 5*ancho*altura
             if AREA > min_area: # DEFINIR AREA
                 #Dibujar rectangulo en el frame original
-
+                cv2.rectangle(imagen, (x1, y1), (x1+ancho, y1+altura), (255,20,20) , 3)
 
         # Se muestra en una ventana llamada "patos" la observación del simulador
         # con los bounding boxes dibujados
-        cv2.imshow('patos', cv2.cvtColor(obs, cv2.COLOR_RGB2BGR))
+        cv2.imshow('patos', cv2.cvtColor(imagen, cv2.COLOR_RGB2BGR))
         # Se muestra en una ventana llamada "filtrado" la imagen filtrada
-        cv2.imshow('filtrado', image)
+        cv2.imshow('filtrado', dilatacion)
 
 
     # Se cierra el environment y termina el programa

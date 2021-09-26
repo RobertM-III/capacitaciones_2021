@@ -121,12 +121,22 @@ if __name__ == '__main__':
                 #Dibujar rectangulo en el frame original
                 cv2.rectangle(imagen, (x1, y1), (x1+ancho, y1+altura), (255,20,20) , 3)
 
+            # Obtener distancia focal desafio 4 (se debe usar el mapa "free")
+            dbot_pos = env.cur_pos
+            duck_pos = np.array([2,0,2])
+            distancia_real = ((dbot_pos[0]-duck_pos[0])**2+(dbot_pos[1]-duck_pos[1])**2+(dbot_pos[2]-duck_pos[2])**2)**(1/2)
+            altura_real = 0.08
+            
+            if altura > 75: # Esto es un filtro para que solo me tome solo el rectangulo grande ( el pato entero ) y no los 
+                foco = (distancia_real*altura)/altura_real # sub-rectangulitos, que me causaban confusiones
+                print(foco) # Aqui fui viendo al ojo cual era una buena aproximacion, y elegi f = 800 (pixeles)
+                
+
         # Se muestra en una ventana llamada "patos" la observación del simulador
         # con los bounding boxes dibujados
         cv2.imshow('patos', cv2.cvtColor(imagen, cv2.COLOR_RGB2BGR))
         # Se muestra en una ventana llamada "filtrado" la imagen filtrada
         cv2.imshow('filtrado', dilatacion)
-
 
     # Se cierra el environment y termina el programa
     env.close()
